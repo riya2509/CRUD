@@ -1,0 +1,6 @@
+Task 1. Fetch complete data  -Done 
+
+Task 2. Implement pagination
+    a. Input params - page size - no. of records to be fetched in one hit
+    b. Page number - send the index of page
+    c. Fetch total number of records 
