@@ -1,15 +1,18 @@
+import mysql from "../database/database.js";
 const appController = {};
-import sql from "../database/database.js";
 
 appController.getData = (req, res) => {
-  sql.query(`SELECT * from post`, (error, result) => {
-    if (error) {
-      console.log(error);
-      res.send({ error });
-    } else {
-      res.send({ message: `Task fetched successfully.`, data: result });
-    }
-  });
+  const { row = 10, page = 1 } = req.query;
+  const value = page <= 0 || isNaN(page) ? 0 : (page - 1) * row;
+  mysql(`SELECT * from post LIMIT ${row} OFFSET ${value}`)
+    .then((response) => {
+      console.log(response);
+      res.send({ message: `Data present`, data: response, status: 1 });
+    })
+    .catch((e) => {
+      console.log(e);
+      res.status(500).send({ message: `Data not present`, status: 0 });
+    });
 };
 
 export default appController;
